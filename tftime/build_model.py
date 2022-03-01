@@ -131,7 +131,7 @@ class BuildModel:
         return x
 
     def build_model(self, input_shape, output_size, output_activation):
-        inputs, x = inputs_f(input_shape, self.dim, 5, 1, False, "same")
+        inputs, x = inputs_f(input_shape, self.dim, 5, 1, False, "same", noise, self.noise_ratio[0])
 
         if self.efficientv1 or self.efficientv2:
             x = self.efficient_model(x)
