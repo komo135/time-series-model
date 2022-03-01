@@ -130,7 +130,7 @@ class BuildModel:
 
         return x
 
-    def build_model(self, input_shape, output_size):
+    def build_model(self, input_shape, output_size, output_activation):
         inputs, x = inputs_f(input_shape, self.dim, 5, 1, False, "same")
 
         if self.efficientv1 or self.efficientv2:
@@ -139,7 +139,7 @@ class BuildModel:
             x = self.conv_model(x)
 
         x = tf.keras.layers.GlobalAvgPool1D()(x)
-        x = Output(output_size)(x)
+        x = Output(output_size, output_activation, noise, self.noise_ratio[2])(x)
 
         return SAMModel(inputs, x) if self.sam else Model(inputs, x)
 
@@ -192,9 +192,9 @@ create_network("se_lambda_convnext", [], 48, "LambdaLayer", "resnet", convnext=T
 create_network("sam_se_lambda_convnext", [], 48, "LambdaLayer", "resnet", convnext=True, se=True, sam=True)
 
 
-def build_model(model_name: str, input_shape: tuple, output_size: int) -> Model:
+def build_model(model_name: str, input_shape: tuple, output_size: int, output_activation=None) -> Model:
     model = network_dict[model_name]()
-    model = model.build_model(input_shape, output_size, )
+    model = model.build_model(input_shape, output_size, output_activation)
 
     return model
 
