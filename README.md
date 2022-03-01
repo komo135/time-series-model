@@ -24,6 +24,21 @@ import tftime
 
 model = tftime.build_model("sam_efficientnet_b2", (30, 1), 2, None)
 ```
+```python
+import tftime
+import tensorflow as tf
+
+inputs = tf.keras.layers.Input((30, 1))
+
+x = tftime.block.ConvBlock(128, "conv1d", "resnet")(inputs)
+x = tf.keras.layers.GlobalAvgPool1D()(x)
+x = tftime.layers.Output(5, "softmax")
+
+model = tftime.model.SAMModel(inputs, x)
+model.compile("adam", categorical_crossentropy, ["accuracy"])
+
+model.fit(x, y)
+```
 
 ### available model
 ```python
