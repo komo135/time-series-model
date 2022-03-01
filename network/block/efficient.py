@@ -29,9 +29,9 @@ class MBBlock(layers.Layer):
             Activation(),
             SE(int(idim * expand_ratio), se_ratio) if se_ratio > 0 else None,
             noise(noise_r),
-            layer(layer_name, odim, False, kernel_size, 1)
+            layer("conv1d", odim, False, kernel_size, 1)
         ])
-        self.l = self.l[self.l is not None]
+        self.l = self.l[self.l is not None].reshape((-1,))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs
@@ -79,7 +79,7 @@ class FuseBlock(layers.Layer):
             noise(noise_r),
             layer("conv1d", odim, False, 1, 1),
         ])
-        self.l = self.l[self.l is not None]
+        self.l = self.l[self.l != None].reshape((-1,))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs

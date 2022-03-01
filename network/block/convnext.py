@@ -6,7 +6,8 @@ from network.layers import layer
 
 
 class ConvnextBlock(layers.Layer):
-    def __init__(self, dim: int, layer_name: str, types: str, attention=None, noise=layers.Dropout, noise_r=0, **kwargs):
+    def __init__(self, dim: int, layer_name: str, types: str, attention=None, noise=layers.Dropout, noise_r=0,
+                 **kwargs):
         super(ConvnextBlock, self).__init__()
         self.dim = dim
         self.layer_name = layer_name
@@ -24,7 +25,7 @@ class ConvnextBlock(layers.Layer):
             layer("conv1d", dim, True, 1, 1, **kwargs),
         ]
         self.l = np.array(self.l)
-        self.l = self.l[self.l is not None]
+        self.l = self.l[self.l != None].reshape((-1,))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs
