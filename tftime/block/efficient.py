@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 
-from tftime.layers import SE, Activation, layer
+from traderl.nn.layers import SE, Activation, layer
 
 
 class MBBlock(layers.Layer):
@@ -31,7 +31,7 @@ class MBBlock(layers.Layer):
             noise(noise_r),
             layer("conv1d", odim, False, kernel_size, 1)
         ])
-        self.l = self.l[self.l is not None].reshape((-1,))
+        self.l = list(self.l[self.l is not None].reshape((-1,)))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs
@@ -79,7 +79,7 @@ class FuseBlock(layers.Layer):
             noise(noise_r),
             layer("conv1d", odim, False, 1, 1),
         ])
-        self.l = self.l[self.l != None].reshape((-1,))
+        self.l = list(self.l[self.l != None].reshape((-1,)))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs

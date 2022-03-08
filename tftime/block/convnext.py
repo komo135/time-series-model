@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 
-from tftime.layers import layer
+from traderl.nn.layers import layer
 
 
 class ConvnextBlock(layers.Layer):
@@ -25,7 +25,7 @@ class ConvnextBlock(layers.Layer):
             layer("conv1d", dim, True, 1, 1, **kwargs),
         ]
         self.l = np.array(self.l)
-        self.l = self.l[self.l != None].reshape((-1,))
+        self.l = list(self.l[self.l != None].reshape((-1,)))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs

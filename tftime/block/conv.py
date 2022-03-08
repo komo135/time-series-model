@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers
-from tftime.layers import layer, Activation
+from traderl.nn.layers import layer, Activation
 import numpy as np
 
 
@@ -49,7 +49,7 @@ class ConvBlock(layers.Layer):
             ]
 
         self.l = np.array(self.l)
-        self.l = self.l[self.l != None].reshape((-1,))
+        self.l = list(self.l[self.l != None].reshape((-1,)))
 
     def call(self, inputs, *args, **kwargs):
         x = inputs
